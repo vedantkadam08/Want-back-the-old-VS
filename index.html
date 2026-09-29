@@ -105,7 +105,7 @@
             transform: translateY(0);
         }
 
-        /* PAGE 1: Cinematic Intro (5-6 sec fade timing) */
+        /* PAGE 1: Cinematic Intro */
         .intro-section {
             text-align: center;
         }
@@ -238,24 +238,46 @@
             color: var(--warm-white);
         }
 
-        /* GIF Containers */
+        /* GIF Carousel / Wrapper with Fade Effect */
         .gif-wrapper {
             margin: 25px auto;
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             border-radius: 14px;
             overflow: hidden;
             border: 1px solid rgba(241, 91, 181, 0.3);
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             background: rgba(0,0,0,0.2);
+            position: relative;
+            height: 220px;
         }
 
         .gif-wrapper img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
             object-fit: cover;
-            max-height: 240px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .gif-wrapper img.active-gif {
+            opacity: 1;
+        }
+
+        /* Emoji Belt above text */
+        .emoji-belt {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 5px;
+            animation: pulseBelt 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseBelt {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
 
         /* Cards Grids */
@@ -549,63 +571,69 @@
     <!-- MAIN CONTAINER -->
     <main class="main-container">
 
-        <!-- PAGE 1 — CINEMATIC INTRO (Fixed direct GIF loading) -->
+        <!-- PAGE 1 — CINEMATIC INTRO -->
         <section class="section intro-section active" id="page-intro">
-            <div class="gif-wrapper">
-                <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute Panda Hug">
+            <div class="emoji-belt">🐼🤎✨🤗</div>
+            <div class="gif-wrapper" id="intro-gif-carousel">
+                <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Panda Hug 1" class="active-gif">
+                <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Panda Hug 2">
+                <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Panda Hug 3">
             </div>
             <div class="intro-sequence" id="intro-sequence"></div>
             <div class="intro-cta-wrapper hidden" id="intro-cta-wrapper">
                 <button class="btn primary-glow-btn" id="start-journey-btn">Let's talk ❤️</button>
-                <span class="scroll-hint">scrool down kar aata 👇</span>
+                <span class="scroll-hint">scroll down kar aata 👇</span>
             </div>
         </section>
 
-        <!-- PAGE 2 — SAD & FUNNY REAL TALK (shona babde) -->
+        <!-- PAGE 2 — WORLD WAR CONVO -->
         <section class="section content-section" id="page-real-talk">
             <div class="content-box scroll-fade">
-                <h2>Oye sun, my shona babde... 🥺</h2>
+                <div class="emoji-belt">🥺💔🎭💬</div>
+                <h2>Oye sun, my shona babde...</h2>
                 <div class="gif-wrapper">
-                    <img src="https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif" alt="Cute Crying Cat">
+                    <img src="https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif" alt="Cute Crying" class="active-gif">
                 </div>
                 <p class="lead-text">Look, kayla tari apan donhi ekdum saint aahot ka? Ekdum khota bolnar nahi mi.</p>
-                <p class="paragraph-text">Apan cute cute texting la directly oscar-winning drama courtroom madhe convert kelo, ani donhi jan ekmekanvarti full victim card khelat hoto! 🎭</p>
-                <p class="paragraph-text">Tu mala bolli, mi tula bollo, donhi jan rudun baslo. Ani aplyi ego fight karat hoti tikde aplye khare khure hearts basun fakat hug magat hote.</p>
-                <p class="highlight-p">Arre baiko, apan ahot tri kon? Ekmekanvche favorite idiots na!</p>
+                <p class="paragraph-text">Apan kadhi kadhi kaay karto na—ekdam cute cute normal conversation chalel asste, ani ekch topic varti ekane kuch tri bolla ki tichya madhun sidhe World War 3 sarkhi bhandan start hote! 💣💥</p>
+                <p class="paragraph-text">Seconds madhe sagla atmosphere change hoto, ani aapan donhi ekmekanvarti full victim card kheltana ragaun bashto.</p>
+                <p class="highlight-p">Ani best part mhanje—jeparynt kon tari ekjan thoda shant hot nahi ya thakayla lagat nahi, teparynt aapan bhandan thambvatach nahi!</p>
             </div>
         </section>
 
-        <!-- PAGE 3 — THE MESS WE MADE (shone gubbu) -->
+        <!-- PAGE 3 — INSTANT QUIT & HUG -->
         <section class="section content-section" id="page-mess">
             <div class="section-header scroll-fade">
-                <h2>Aplya toxic cute circuscha trailer, shone gubbu... 🎪</h2>
+                <div class="emoji-belt">🫂✨❤️😂</div>
+                <h2>Ani mag ekdamach sagla off! 🛑</h2>
             </div>
             <div class="cards-grid">
                 <div class="want-card scroll-fade">
+                    <h3>The Sudden Stop</h3>
+                    <p>Ekda koni tari thoda shant zala ki ekdamach bhandan thambte, sagla drama eka second madhe drop hoto.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>The Instant Hug</h3>
+                    <p>Bhandan samplyasarkhe aapan lagech hug karto, jasa kai kahi zalach navta, ekdum cute couple sarkha! 🥰</p>
+                </div>
+                <div class="want-card scroll-fade">
                     <h3>Overthinking 101</h3>
-                    <p>2 taas reply nahi aala ki direct World War 3 chi planning karat basaycha.</p>
-                </div>
-                <div class="want-card scroll-fade">
-                    <h3>The Victim Olympics</h3>
-                    <p>"Nahi re, tu jaast hurt kelaes mala!" — "Acha? Mi tr tula 5 percent jaast miss kela!"</p>
-                </div>
-                <div class="want-card scroll-fade">
-                    <h3>Stubborn Silence</h3>
-                    <p>Ekmekanvarti ragavlele asnar pan secretly chat refresh kartay, ekdum clowns sarkhe! 🤡</p>
+                    <p>2 taas reply nahi aala ki direct World War chi planning karaychi, pan sheti premich nikhalycha.</p>
                 </div>
                 <div class="want-card scroll-fade">
                     <h3>Deep Down Truth</h3>
-                    <p>Ekmekanna harvaychi itki bhiti ahe ki apan nakalat ekmekanna dur karayla lagto.</p>
+                    <p>Ekmekanna harvaychi itki bhiti ahe ki apan nakalat sagla drama karun sheti hug karun bashto.</p>
                 </div>
             </div>
         </section>
 
-        <!-- PAGE 4 — MUTUAL ACCOUNTABILITY & TEARS (bayko) -->
+        <!-- PAGE 4 — MUTUAL ACCOUNTABILITY & TEARS -->
         <section class="section content-section" id="page-accountability">
             <div class="content-box scroll-fade">
+                <div class="emoji-belt">❤️🫂✨🥺</div>
                 <h2>My dearest bayko... ❤️</h2>
                 <div class="gif-wrapper">
-                    <img src="https://media.giphy.com/media/3oEdv4hwWTzBhWvaU0/giphy.gif" alt="Cute Couple Hug">
+                    <img src="https://media.giphy.com/media/3oEdv4hwWTzBhWvaU0/giphy.gif" alt="Cute Couple Hug" class="active-gif">
                 </div>
                 <p class="lead-text">Ekdam serious (ani thoda emotional) bolto aata—mala tuzya sobat fight karayla bilkul avdat nahi.</p>
                 <p class="paragraph-text">He kharach khup hurt karto apla fight zalyavr. Tu tuzya stress madhe ahes, ani mi mazya overthinking madhe. Apan donhiga khup trass ghetoy.</p>
@@ -617,6 +645,7 @@
         <!-- PAGE 5 — WHAT WE PROMISE EACH OTHER -->
         <section class="section promise-section" id="page-promises">
             <div class="letter-container scroll-fade">
+                <div class="emoji-belt" style="text-align: center;">🤝✨💖🌸</div>
                 <h2>Aplyle naveen rules, aata pasun start:</h2>
                 <ul class="promise-list">
                     <li>Atthun pude no more silent treatment, aapan bolun sort karnar!</li>
@@ -632,24 +661,26 @@
         <!-- PAGE 6 — THE QUESTION -->
         <section class="section question-section" id="page-question">
             <div class="question-container scroll-fade">
+                <div class="emoji-belt">🥺❤️✨🥰</div>
                 <p>Mala mahit ahe apan ekmekanna khup dokya laavto...</p>
                 <p>Pan honestly? Konachya sobatch doka lavayla avdat nahi tuzya shivay!</p>
                 <div class="gif-wrapper" style="max-width: 220px;">
-                    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Cat Please">
+                    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Cat Please" class="active-gif">
                 </div>
                 <h2 class="big-prompt">Tar sang mala...</h2>
                 <h1 class="huge-question">Apan fight band karun parat cute couples sarkha rahuya ka?</h1>
                 <div class="decision-buttons" id="decision-buttons-group">
                     <button class="btn btn-yes" id="btn-yes">❤️ Ho, bas zala aata yeda-gabad, hug kar mala!</button>
-                    <button class="btn btn-no" id="btn-no">Mala thoda bhau khau de...</button>
+                    <button class="btn btn-no" id="btn-no">Mala thoda bhav khau de...</button>
                 </div>
             </div>
 
             <!-- YES RESPONSE CONTAINER -->
             <div class="response-container hidden" id="response-yes">
                 <div class="response-content">
+                    <div class="emoji-belt">🎉💋🫂❤️</div>
                     <div class="gif-wrapper" style="max-width: 250px;">
-                        <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiOkM/giphy.gif" alt="Viral Kissing Cat">
+                        <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiOkM/giphy.gif" alt="Viral Kissing Cat" class="active-gif">
                     </div>
                     <p class="big-prompt">Yay! Best decision ever! 🥰</p>
                     <p>Yeta na patkan mazyakde ani sagla visrun ekdam tight hug de!</p>
@@ -662,14 +693,14 @@
                 </div>
             </div>
 
-            <!-- NOT SURE RESPONSE CONTAINER (Dynamic response when clicking "Mala thoda bhau khau de") -->
+            <!-- NOT SURE RESPONSE CONTAINER -->
             <div class="response-container hidden" id="response-not-sure">
                 <div class="response-content">
+                    <div class="emoji-belt">😂👑💁‍♀️❤️</div>
                     <div class="gif-wrapper" style="max-width: 220px;">
-                        <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Cute Panda Angry Cute">
+                        <img src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif" alt="Cute Panda Angry Cute" class="active-gif">
                     </div>
-                    <p class="big-prompt">Arre bas na baiko, kiti bhav khashil! 😂</p>
-                    <p>Pls na bass zala aata! Kay he evda bhav khatey tu!</p>
+                    <p class="big-prompt">Pls na bass zala aata! Kay he evda bhav khatey tu! 😂</p>
                     <p>Ata bilkul nakhre nako, patkan "Ho" dab ani yeta ikde!</p>
                     <div class="decision-buttons" style="margin-top: 25px;">
                         <button class="btn btn-yes" id="btn-force-yes">❤️ Chalo thike, ho hug detye!</button>
@@ -681,6 +712,7 @@
         <!-- FOOTER -->
         <section class="section footer-section" id="page-footer">
             <div class="footer-meta scroll-fade">
+                <div class="emoji-belt">✨💖🌸</div>
                 <p>“Made with pure love, drama, and zero regrets.”</p>
                 <p class="sub-footer">Karan life khup choti ahe tuzi mazi fight karat basayla.</p>
                 <button class="btn-restart-journey" id="restart-journey-top-btn">↺ Play this drama from the start</button>
@@ -799,7 +831,22 @@
 
 
             /* ==========================================
-               3. PAGE 1 — CINEMATIC INTRO (5-6 sec fade timing)
+               3. GIF CAROUSEL FADE IN/OUT EFFECT
+               ========================================== */
+            const introCarousel = document.getElementById('intro-gif-carousel');
+            if (introCarousel) {
+                const images = introCarousel.querySelectorAll('img');
+                let currentIndex = 0;
+                setInterval(() => {
+                    images[currentIndex].classList.remove('active-gif');
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].classList.add('active-gif');
+                }, 3500);
+            }
+
+
+            /* ==========================================
+               4. PAGE 1 — CINEMATIC INTRO (5-6 sec fade timing)
                ========================================== */
             const introSequenceContainer = document.getElementById('intro-sequence');
             const introCtaWrapper = document.getElementById('intro-cta-wrapper');
@@ -852,7 +899,7 @@
 
 
             /* ==========================================
-               4. HUG & KISS EMOJI EXPLOSION EFFECT
+               5. HUG & KISS EMOJI EXPLOSION EFFECT
                ========================================== */
             function triggerEmojiExplosion() {
                 const emojis = ['🤗', '💋', '❤️', '😘', '🫂', '💖', '🥰'];
@@ -871,7 +918,7 @@
 
 
             /* ==========================================
-               5. DECISION BUTTONS INTERACTIONS
+               6. DECISION BUTTONS INTERACTIONS (FIXED)
                ========================================== */
             const btnYes = document.getElementById('btn-yes');
             const btnNo = document.getElementById('btn-no');
@@ -881,35 +928,39 @@
             const decisionButtonsGroup = document.getElementById('decision-buttons-group');
             const heartPulseContainer = document.getElementById('heart-pulse-container');
 
-            btnYes.addEventListener('click', () => {
-                decisionButtonsGroup.style.opacity = '0';
-                setTimeout(() => {
-                    responseNotSure.classList.remove('show');
-                    responseYes.classList.add('show');
-                    triggerEmojiExplosion();
-                    if (!heartPulseContainer.hasChildNodes()) {
-                        const heartDiv = document.createElement('div');
-                        heartDiv.className = 'pulse-heart';
-                        heartDiv.innerHTML = '❤️';
-                        heartPulseContainer.appendChild(heartDiv);
-                    }
-                }, 400);
-            });
+            if (btnYes) {
+                btnYes.addEventListener('click', () => {
+                    if (decisionButtonsGroup) decisionButtonsGroup.style.opacity = '0';
+                    setTimeout(() => {
+                        if (responseNotSure) responseNotSure.classList.remove('show');
+                        if (responseYes) responseYes.classList.add('show');
+                        triggerEmojiExplosion();
+                        if (heartPulseContainer && !heartPulseContainer.hasChildNodes()) {
+                            const heartDiv = document.createElement('div');
+                            heartDiv.className = 'pulse-heart';
+                            heartDiv.innerHTML = '❤️';
+                            heartPulseContainer.appendChild(heartDiv);
+                        }
+                    }, 400);
+                });
+            }
 
-            btnNo.addEventListener('click', () => {
-                decisionButtonsGroup.style.opacity = '0';
-                setTimeout(() => {
-                    responseNotSure.classList.add('show');
-                }, 400);
-            });
+            if (btnNo) {
+                btnNo.addEventListener('click', () => {
+                    if (decisionButtonsGroup) decisionButtonsGroup.style.opacity = '0';
+                    setTimeout(() => {
+                        if (responseNotSure) responseNotSure.classList.add('show');
+                    }, 400);
+                });
+            }
 
             if (btnForceYes) {
                 btnForceYes.addEventListener('click', () => {
-                    responseNotSure.classList.remove('show');
+                    if (responseNotSure) responseNotSure.classList.remove('show');
                     setTimeout(() => {
-                        responseYes.classList.add('show');
+                        if (responseYes) responseYes.classList.add('show');
                         triggerEmojiExplosion();
-                        if (!heartPulseContainer.hasChildNodes()) {
+                        if (heartPulseContainer && !heartPulseContainer.hasChildNodes()) {
                             const heartDiv = document.createElement('div');
                             heartDiv.className = 'pulse-heart';
                             heartDiv.innerHTML = '❤️';
@@ -919,9 +970,12 @@
                 });
             }
 
-            document.getElementById('restart-journey-top-btn').addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            const restartBtn = document.getElementById('restart-journey-top-btn');
+            if (restartBtn) {
+                restartBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
 
         });
     </script>
