@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Us, But Better</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Pink and Purple Gradient Theme */
+            --bg-color: #120918;
+            --card-bg: rgba(30, 18, 38, 0.55);
+            --card-border: rgba(220, 150, 255, 0.12);
+            --accent-purple: #9b5de5;
+            --accent-pink: #f15bb5;
+            --soft-pink: #ffb5e2;
+            --purple-glow: rgba(155, 93, 229, 0.25);
+            --pink-glow: rgba(241, 91, 181, 0.2);
+            --warm-white: #fcf6fa;
+            --text-muted: #c9b5d4;
+            --gold-accent: #ffd166;
+            --transition-smooth: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0714 0%, #1a0b24 50%, #14081c 100%);
+            background-attachment: fixed;
+            color: var(--warm-white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink), var(--soft-pink));
+            width: 0%;
+            z-index: 100;
+            transition: width 0.15s ease-out;
+        }
+
+        /* Main Container & Sections */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* Scroll Animations Base (Slower transition) */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* PAGE 1: Cinematic Intro */
+        .intro-section {
+            text-align: center;
+        }
+
+        .intro-sequence {
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--warm-white);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.4s ease, transform 1.4s ease;
+            position: absolute;
+            width: 80%;
+            max-width: 700px;
+            line-height: 1.4;
+        }
+
+        .intro-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .intro-line.hide {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .intro-cta-wrapper {
+            margin-top: 40px;
+            opacity: 0;
+            transition: opacity 1.8s ease;
+        }
+
+        .intro-cta-wrapper.show {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            color: var(--warm-white);
+            border: 1px solid rgba(241, 91, 181, 0.3);
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(5px);
+        }
+
+        .primary-glow-btn {
+            border-color: var(--accent-pink);
+            background: rgba(155, 93, 229, 0.2);
+            box-shadow: 0 0 25px var(--purple-glow);
+        }
+
+        .primary-glow-btn:hover {
+            background: var(--accent-purple);
+            border-color: var(--soft-pink);
+            box-shadow: 0 0 35px var(--pink-glow);
+            transform: translateY(-2px);
+        }
+
+        /* PAGE 2: Timeline */
+        .timeline-section {
+            align-items: stretch;
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            color: var(--warm-white);
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            width: 100%;
+            padding-left: 30px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 9px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-purple), var(--accent-pink), rgba(252,246,250,0.1));
+        }
+
+        .timeline-card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 25px 30px;
+            border-radius: 14px;
+            margin-bottom: 35px;
+            backdrop-filter: blur(12px);
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 30px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent-pink);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            font-size: 0.85rem;
+            color: var(--soft-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .timeline-card p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--warm-white);
+        }
+
+        .timeline-card em {
+            color: var(--soft-pink);
+            font-style: italic;
+        }
+
+        /* Content Boxes & Narratives */
+        .content-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 50px 40px;
+            border-radius: 18px;
+            max-width: 750px;
+            width: 100%;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .content-box h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 25px;
+            color: var(--warm-white);
+        }
+
+        .lead-text {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--soft-pink);
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: var(--warm-white);
+        }
+
+        .bullet-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent-pink);
+        }
+
+        .quote-block {
+            border-left: 2px solid var(--accent-pink);
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .quote-block p {
+            margin-bottom: 12px;
+            color: var(--warm-white);
+        }
+
+        .highlight-p {
+            font-size: 1.15rem;
+            color: var(--soft-pink);
+            font-weight: 400;
+            margin: 20px 0;
+        }
+
+        /* PAGE 4: Impact Section */
+        .impact-section {
+            align-items: center;
+        }
+
+        .impact-statements {
+            max-width: 700px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .statement-card {
+            background: rgba(35, 18, 48, 0.6);
+            border: 1px solid rgba(241, 91, 181, 0.2);
+            padding: 20px 25px;
+            border-radius: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--warm-white);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .statement-card:hover {
+            transform: scale(1.01);
+            border-color: var(--soft-pink);
+        }
+
+        .statement-card.highlight {
+            background: rgba(155, 93, 229, 0.25);
+            border-color: var(--accent-pink);
+            color: var(--soft-pink);
+            font-style: normal;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+
+        .mt-large {
+            margin-top: 50px;
+        }
+
+        /* PAGE 5: Mutual Accountability */
+        .separation-box {
+            background: rgba(20, 10, 28, 0.85);
+            border: 1px dashed rgba(241, 91, 181, 0.25);
+            padding: 30px;
+            border-radius: 14px;
+            margin: 30px 0;
+        }
+
+        .separation-box p {
+            margin-bottom: 15px;
+        }
+
+        .separation-box p:last-child {
+            margin-bottom: 0;
+            color: var(--soft-pink);
+            font-weight: 500;
+        }
+
+        .cycle-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 14px;
+        }
+
+        .cycle-item {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 8px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--warm-white);
+        }
+
+        .cycle-arrow {
+            color: var(--accent-pink);
+            font-weight: bold;
+        }
+
+        .center-text {
+            text-align: center;
+        }
+
+        .mt-medium {
+            margin-top: 30px;
+        }
+
+        /* PAGE 6 & 8: Cards Grids */
+        .wants-section, .needs-section {
+            align-items: center;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .want-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 30px 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .want-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(241, 91, 181, 0.45);
+        }
+
+        .want-card h3 {
+            font-size: 1.4rem;
+            color: var(--soft-pink);
+            margin-bottom: 12px;
+        }
+
+        .want-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--warm-white);
+        }
+
+        .conclusion-banner {
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+        }
+
+        .highlight-statement {
+            color: var(--soft-pink);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* PAGE 7: Promises Letter */
+        .promise-section {
+            align-items: center;
+        }
+
+        .letter-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 60px 50px;
+            border-radius: 18px;
+            max-width: 750px;
+            width: 100%;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .letter-container h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .promise-list {
+            list-style: none;
+        }
+
+        .promise-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+            color: var(--warm-white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+        }
+
+        .promise-list li::before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            color: var(--accent-pink);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .transition-to-next {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.15rem;
+            color: var(--soft-pink);
+            font-style: italic;
+        }
+
+        /* PAGE 9: Restart Cinematic (Slower Animation) */
+        .restart-cinematic {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .cinematic-sequence {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cinematic-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            color: var(--warm-white);
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1.8s ease, transform 1.8s ease;
+            transform: translateY(20px);
+        }
+
+        .cinematic-line.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cinematic-line.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .cinematic-giant {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--soft-pink);
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.05em;
+        }
+
+        .cinematic-giant.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .restart-list-wrapper {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 2s ease;
+            width: 100%;
+        }
+
+        .restart-list-wrapper.active {
+            opacity: 1;
+        }
+
+        .restart-list-wrapper p {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--warm-white);
+        }
+
+        .accent-restart {
+            color: var(--soft-pink);
+            font-weight: 500;
+            margin-top: 20px !important;
+        }
+
+        .dim-restart {
+            color: var(--text-muted);
+        }
+
+        .giant-us {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            color: var(--warm-white);
+            margin-top: 25px;
+        }
+
+        /* PAGE 10: Question Section */
+        .question-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .question-container {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .question-container p {
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .big-prompt {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--warm-white);
+            margin: 30px 0 10px 0;
+        }
+
+        .huge-question {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            color: var(--soft-pink);
+            margin-bottom: 40px;
+        }
+
+        .decision-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn-yes {
+            background: rgba(155, 93, 229, 0.35);
+            border-color: var(--accent-pink);
+            font-size: 1.1rem;
+            padding: 16px 36px;
+            box-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        .btn-yes:hover {
+            background: var(--accent-purple);
+            box-shadow: 0 0 40px var(--pink-glow);
+        }
+
+        .btn-no {
+            background: rgba(40, 20, 50, 0.5);
+            border-color: rgba(241, 91, 181, 0.2);
+            font-size: 1.1rem;
+            padding: 16px 36px;
+            color: var(--text-muted);
+        }
+
+        .btn-no:hover {
+            color: var(--warm-white);
+            border-color: rgba(241, 91, 181, 0.4);
+            background: rgba(60, 30, 75, 0.6);
+        }
+
+        /* Response Containers */
+        .response-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s ease;
+            padding: 20px;
+        }
+
+        .response-container.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .response-content {
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .response-content p {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            color: var(--warm-white);
+        }
+
+        .highlight-final {
+            color: var(--soft-pink) !important;
+            font-size: 1.3rem !important;
+            margin-top: 20px;
+        }
+
+        .dim-text {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .huge-us {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            color: var(--soft-pink);
+            margin-top: 40px;
+            text-shadow: 0 0 35px var(--pink-glow);
+        }
+
+        /* Footer Section */
+        .footer-section {
+            min-height: auto;
+            padding: 80px 0 60px 0;
+            text-align: center;
+        }
+
+        .rules-trigger-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px 40px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s ease;
+            margin-bottom: 50px;
+        }
+
+        .rules-trigger-card:hover {
+            border-color: var(--accent-pink);
+            background: rgba(50, 25, 65, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .rules-trigger-card span:first-child {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--warm-white);
+        }
+
+        .arrow-icon {
+            color: var(--accent-pink);
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .rules-trigger-card:hover .arrow-icon {
+            transform: translateY(3px);
+        }
+
+        .footer-meta p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--warm-white);
+            margin-bottom: 10px;
+        }
+
+        .sub-footer {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.9rem !important;
+            color: var(--text-muted) !important;
+            line-height: 1.5;
+        }
+
+        .btn-restart-journey {
+            margin-top: 30px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-restart-journey:hover {
+            color: var(--soft-pink);
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 5, 15, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: #1a0b24;
+            border: 1px solid rgba(241, 91, 181, 0.25);
+            padding: 40px;
+            border-radius: 18px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            transform: translateY(20px);
+            transition: transform 0.5s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--warm-white);
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: var(--warm-white);
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.95rem;
+            color: var(--soft-pink);
+            margin-bottom: 25px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .modal-rules-list {
+            list-style: none;
+        }
+
+        .modal-rules-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            color: var(--warm-white);
+        }
+
+        .modal-rules-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-pink);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes heartPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; text-shadow: 0 0 25px var(--accent-pink); }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .pulse-heart {
+            display: inline-block;
+            animation: heartPulse 2.5s infinite ease-in-out;
+            color: var(--accent-pink);
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 15px;
+            }
+            .section {
+                padding: 60px 0;
+                min-height: auto;
+            }
+            .content-box, .letter-container {
+                padding: 35px 25px;
+            }
+            .timeline-container {
+                padding-left: 20px;
+            }
+            .timeline-card {
+                padding: 20px;
+            }
+            .timeline-card::before {
+                left: -24px;
+            }
+            .timeline-line {
+                left: 4px;
+            }
+            .modal-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Page Progress Indicator -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="main-container">
+
+        <!-- PAGE 1 — CINEMATIC INTRO -->
+        <section class="section intro-section active" id="page-intro">
+            <div class="intro-sequence" id="intro-sequence"></div>
+            <div class="intro-cta-wrapper hidden" id="intro-cta-wrapper">
+                <button class="btn primary-glow-btn" id="start-journey-btn">Begin Our Journey →</button>
+            </div>
+        </section>
+
+        <!-- PAGE 2 — OUR JOURNEY & SHARED HISTORY -->
+        <section class="section timeline-section" id="page-timeline">
+            <div class="section-header">
+                <h2>Looking back at us, my shona babde shone gubbu bayko…</h2>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">October 2024</span>
+                    <p>We began our journey together.<br>From that very moment, you became my absolute favorite person, my safe place, and my whole world.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">The beautiful months</span>
+                    <p>We shared so much laughter, warmth, and dreams.<br>We built a special bond that meant everything to both of us.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">Along the way</span>
+                    <p>We hit some difficult bumps in the road.<br>Trust got tested, boundaries got blurred, and misunderstandings started creating distance between our hearts.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">The pain we both carried</span>
+                    <p>There were moments of hurt, secrets, and fears that neither of us knew how to handle properly.<br>We both got wounded, and it made us defensive.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">Unresolved shadows</span>
+                    <p>Unclear boundaries, late-night talks, and old connections brought heavy insecurities into our space.<br>We both struggled to find clarity and comfort.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">The hard conversations</span>
+                    <p>Facing the truth wasn't easy. It hurt to look at what went wrong.<br>Yet through all the tears and hard talks, we both chose to stay because we care so deeply about each other.</p>
+                </div>
+                <div class="timeline-card scroll-fade">
+                    <span class="timeline-date">Right now</span>
+                    <p>Staying together wasn't a magic fix—the echoes of what happened still lingered in our minds.<br><br><em>We both learned what fear feels like when you're terrified of losing the person you love.</em></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3 — HOW WE BOTH GOT LOST -->
+        <section class="section narrative-section" id="page-aftermath">
+            <div class="content-box scroll-fade">
+                <h2>How we both lost our balance…</h2>
+                <p class="lead-text">Neither of us meant to hurt one another, but our fears started taking over the steering wheel.</p>
+                <ul class="bullet-list">
+                    <li class="scroll-fade">Uncertainty turned into overthinking and constant worry for me.</li>
+                    <li class="scroll-fade">Stress and pressure made us both react from a place of defense instead of love.</li>
+                    <li class="scroll-fade">Small misunderstandings turned into heavy arguments because we were both secretly hurting.</li>
+                    <li class="scroll-fade">Boundaries became tangled, making us both feel insecure at different times.</li>
+                    <li class="scroll-fade">Instead of holding each other close when we felt scared, we accidentally pushed each other away.</li>
+                </ul>
+                <div class="quote-block scroll-fade">
+                    <p>When trust gets fractured, every little silence feels loud. When past hurts linger, every innocent conversation can feel threatening.</p>
+                    <p>We both brought our insecurities into the light, and it created a cycle of exhaustion for both of us, my love.</p>
+                </div>
+                <p class="highlight-p scroll-fade">I never want our relationship to be about monitoring or controlling each other.</p>
+                <p class="scroll-fade">True love can't breathe in a cage. It needs safety, openness, and mutual peace.</p>
+                <p class="scroll-fade">We both deserve a love where we feel completely chosen and secure.</p>
+            </div>
+        </section>
+
+        <!-- PAGE 4 — WHAT WE BOTH WENT THROUGH -->
+        <section class="section impact-section" id="page-impact">
+            <div class="section-header scroll-fade">
+                <h2>The weight we both carried on our shoulders…</h2>
+            </div>
+            <div class="impact-statements">
+                <div class="statement-card scroll-fade">“We both became terrified of losing what we shared.”</div>
+                <div class="statement-card scroll-fade">“Old hurts made it hard to trust the present moment.”</div>
+                <div class="statement-card scroll-fade">“We overthought things that shouldn't have broken our peace.”</div>
+                <div class="statement-card scroll-fade">“We let our fears speak louder than our affection.”</div>
+                <div class="statement-card scroll-fade">“We reacted out of pain when what we really wanted was reassurance.”</div>
+                <div class="statement-card highlight scroll-fade">“And through it all, our hearts never stopped caring for each other, my shona babde shone gubbu bayko.”</div>
+            </div>
+            <div class="content-box scroll-fade mt-large">
+                <p>Neither of us had it easy. You carried your struggles, your stress, and your side of the hurt.</p>
+                <p>I carried my overthinking, my doubts, and my defensive reactions.</p>
+                <p><strong>We were hurting in the same house, but sometimes speaking completely different languages.</strong></p>
+                <p>It's time to change that so we can heal together.</p>
+            </div>
+        </section>
+
+        <!-- PAGE 5 — OUR MUTUAL ACCOUNTABILITY -->
+        <section class="section accountability-section" id="page-my-part">
+            <div class="content-box scroll-fade">
+                <h2>Owning our side, together.</h2>
+                <p>This isn't about pointing fingers or seeing who is more to blame.</p>
+                <p>We both made mistakes. We both let our triggers get the best of us. We both said things or reacted in ways that added to the storm.</p>
+                <div class="separation-box scroll-fade">
+                    <p>You have your feelings, your perspective, and your pain to heal from.</p>
+                    <p>I have my reactions, my overthinking, and my shortcomings to work on.</p>
+                    <p>We are a team—which means we share the weight of fixing this together.</p>
+                </div>
+                <div class="cycle-container scroll-fade">
+                    <div class="cycle-item">UNRESOLVED PAIN</div>
+                    <div class="cycle-arrow">→</div>
+                    <div class="cycle-item">FEAR & DOUBT</div>
+                    <div class="cycle-arrow">→</div>
+                    <div class="cycle-item">MISUNDERSTANDING</div>
+                    <div class="cycle-arrow">→</div>
+                    <div class="cycle-item">DISTANCE</div>
+                    <div class="cycle-arrow">→</div>
+                    <div class="cycle-item">HEALING TOGETHER</div>
+                </div>
+                <p class="center-text mt-medium scroll-fade"><strong>Let's break this loop and replace it with deep, gentle understanding.</strong></p>
+            </div>
+        </section>
+
+        <!-- PAGE 6 — WHAT WE BOTH DESIRE -->
+        <section class="section wants-section" id="page-wants">
+            <div class="section-header scroll-fade">
+                <h2>What we both truly want for us…</h2>
+            </div>
+            <div class="cards-grid">
+                <div class="want-card scroll-fade">
+                    <h3>Gentle Honesty</h3>
+                    <p>Speaking our truth with kindness, even when it's difficult.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Emotional Safety</h3>
+                    <p>Knowing we can express our feelings without fear of harsh judgment.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Healthy Boundaries</h3>
+                    <p>Protecting our relationship while giving each other room to breathe and grow.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Soft Reassurance</h3>
+                    <p>Reminding each other that we are chosen, valued, and loved every single day.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Open Communication</h3>
+                    <p>Talking through our worries before they turn into heavy walls between us.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Mutual Respect</h3>
+                    <p>Honoring each other's individuality, friendships, and personal space.</p>
+                </div>
+            </div>
+            <div class="conclusion-banner scroll-fade">
+                <p>“We don't need to control each other.”</p>
+                <p class="highlight-statement">“We just need to choose each other, over and over again.”</p>
+            </div>
+        </section>
+
+        <!-- PAGE 7 — OUR MUTUAL PROMISES -->
+        <section class="section promise-section" id="page-promises">
+            <div class="letter-container scroll-fade">
+                <h2>My gentle promises to you, my shona babde shone gubbu bayko</h2>
+                <ul class="promise-list">
+                    <li>I promise to listen to your side with an open heart instead of rushing to conclusions.</li>
+                    <li>I promise to calm my overthinking and talk to you gently when my mind feels heavy.</li>
+                    <li>I promise to respect your personal boundaries and give you space when you need it.</li>
+                    <li>I promise to choose patience over anger and love over ego.</li>
+                    <li>I promise to protect our bond and cherish the incredible connection we share.</li>
+                    <li>I promise to remind you how much you mean to me, especially on your hardest days.</li>
+                </ul>
+                <p class="transition-to-next scroll-fade">And together, let's build a space where we both feel safe and deeply cherished.</p>
+            </div>
+        </section>
+
+        <!-- PAGE 8 — WHAT WE CAN GIVE EACH OTHER -->
+        <section class="section needs-section" id="page-needs">
+            <div class="section-header scroll-fade">
+                <h2>What we can offer one another moving forward</h2>
+            </div>
+            <div class="cards-grid">
+                <div class="want-card scroll-fade">
+                    <h3>Total Transparency</h3>
+                    <p>Sharing our lives openly so neither of us ever has to guess or wonder.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>A Safe Harbor</h3>
+                    <p>Being each other's soft place to land when the outside world feels overwhelming.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Patience in Healing</h3>
+                    <p>Giving each other grace as we unlearn old habits and build new, healthy patterns.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Reassuring Words</h3>
+                    <p>Filling the quiet moments with warmth, affection, and emotional security.</p>
+                </div>
+                <div class="want-card scroll-fade">
+                    <h3>Unwavering Support</h3>
+                    <p>Standing side-by-side through every high and low as true partners.</p>
+                </div>
+            </div>
+            <div class="center-text mt-medium scroll-fade">
+                <p><em>We can heal this, my shona babde shone gubbu bayko. Hand in hand.</em></p>
+            </div>
+        </section>
+
+        <!-- PAGE 9 — THE RESTART (Slower Cinematic Timing) -->
+        <section class="section restart-cinematic" id="page-restart">
+            <div class="cinematic-sequence">
+                <p class="cinematic-line" data-delay="0">We don't need to erase our past…</p>
+                <p class="cinematic-line" data-delay="3000">Because every lesson brought us here.</p>
+                <p class="cinematic-line" data-delay="6000">We just need to leave behind the heavy weight of what hurt us.</p>
+                <p class="cinematic-line" data-delay="9500">So let's take a deep breath together…</p>
+                <p class="cinematic-line" data-delay="12500">And choose a brand new chapter.</p>
+                <h1 class="cinematic-giant" data-delay="15500">LET'S RESTART WITH LOVE.</h1>
+                <div class="restart-list-wrapper" data-delay="19000">
+                    <p>Restart our communication with gentleness.</p>
+                    <p>Restart our trust with complete openness.</p>
+                    <p>Restart our bond with infinite patience.</p>
+                    <p class="accent-restart">More softness. More laughter. More understanding. More love.</p>
+                    <p class="dim-restart">Less fear. Less overthinking. Less distance.</p>
+                    <p class="giant-us">Just you and me. Always.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 10 — ONE QUESTION -->
+        <section class="section question-section" id="page-question">
+            <div class="question-container scroll-fade">
+                <p>Healing takes time, and rebuilding our sweetest rhythm won't happen overnight.</p>
+                <p>But I know with all my heart that what we share is worth every bit of effort, patience, and love.</p>
+                <p>I want to be your peace, your biggest supporter, and your safe home.</p>
+                <h2 class="big-prompt">My shona babde shone gubbu bayko…</h2>
+                <h1 class="huge-question">Shall we heal and try again, together?</h1>
+                <div class="decision-buttons" id="decision-buttons-group">
+                    <button class="btn btn-yes" id="btn-yes">❤️ Yes, let's heal and grow together.</button>
+                    <button class="btn btn-no" id="btn-no">Let's take it gently, step by step.</button>
+                </div>
+            </div>
+
+            <!-- YES RESPONSE CONTAINER -->
+            <div class="response-container hidden" id="response-yes">
+                <div class="response-content">
+                    <p>Then let's take each other's hands.</p>
+                    <p>Let's promise to lean on one another when things get heavy.</p>
+                    <p>Let's promise to communicate with warmth and kindness.</p>
+                    <p>Let's promise to love each other through every flaw and imperfection.</p>
+                    <p class="highlight-final"><strong>Our story isn't over—it's evolving into something much deeper and more beautiful.</strong></p>
+                    <div class="mt-large">
+                        <p>I love you infinitely, my shona babde shone gubbu bayko.</p>
+                        <p class="big-prompt">Here is to us, but so much better.</p>
+                    </div>
+                    <h1 class="huge-us">Forever us. ❤️</h1>
+                    <div class="heart-pulse-container" id="heart-pulse-container"></div>
+                </div>
+            </div>
+
+            <!-- NOT SURE RESPONSE CONTAINER -->
+            <div class="response-container hidden" id="response-not-sure">
+                <div class="response-content">
+                    <p class="big-prompt">Take all the time you need, my love.</p>
+                    <p>There is no rush, no pressure, and no expectations.</p>
+                    <p>I am right here by your side, ready to listen whenever you're ready to share your heart.</p>
+                    <p>Your comfort and peace mean everything to me.</p>
+                    <p class="highlight-final">We will take it at whatever pace feels safe for you.</p>
+                    <p class="mt-large dim-text">I love you, always. ❤️</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXTRA FEATURE — PRIVATE "OUR PROMISES" CARD & FOOTER -->
+        <section class="section footer-section" id="page-footer">
+            <div class="rules-trigger-card scroll-fade" id="rules-trigger-btn">
+                <span>our gentle promises to each other…</span>
+                <span class="arrow-icon">↓</span>
+            </div>
+            <div class="footer-meta scroll-fade">
+                <p>“Made with all my heart for you.”</p>
+                <p class="sub-footer">To remember how much we cherish each other.<br>And how strong our love really is.</p>
+                <button class="btn-restart-journey" id="restart-journey-top-btn">↺ Restart Journey</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PRIVATE "OUR PROMISES" MODAL -->
+    <div class="modal-overlay" id="rules-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <h2>Our Gentle Guiding Rules</h2>
+            <p class="modal-subtitle">Simple reminders to protect our peace and nurture our love together.</p>
+            <ul class="modal-rules-list">
+                <li>We always speak our truth with gentleness and kindness.</li>
+                <li>We share our worries before they grow into heavy misunderstandings.</li>
+                <li>We never use anger or silence to punish each other.</li>
+                <li>We respect each other's individual space and personal growth.</li>
+                <li>We protect our bond with openness and mutual transparency.</li>
+                <li>We leave past arguments in the past and focus on our present peace.</li>
+                <li>We apologize readily when we make mistakes and forgive with open arms.</li>
+                <li>We reassure each other when insecurities or doubts creep in.</li>
+                <li>We choose patience, warmth, and love in every disagreement.</li>
+                <li>We are partners first, always.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* ==========================================
+               1. PARTICLE & HEART CANVAS BACKGROUND
+               ========================================== */
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            let width, height;
+            let particles = [];
+            
+            function resizeCanvas() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.size = Math.random() * 2.5 + 0.6;
+                    this.speedX = (Math.random() - 0.5) * 0.25;
+                    this.speedY = (Math.random() - 0.5) * 0.25 - 0.08;
+                    this.opacity = Math.random() * 0.6 + 0.15;
+                    this.isHeart = Math.random() < 0.1;
+                    this.pulse = Math.random() * Math.PI;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.pulse += 0.015;
+                    
+                    if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.opacity * (0.8 + Math.sin(this.pulse) * 0.2);
+                    if (this.isHeart) {
+                        ctx.fillStyle = '#ffb5e2';
+                        ctx.font = `${Math.floor(this.size * 8)}px sans-serif`;
+                        ctx.fillText('♥', this.x, this.y);
+                    } else {
+                        ctx.fillStyle = '#fcf6fa';
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const count = Math.min(Math.floor((width * height) / 12000), 75);
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+
+            /* ==========================================
+               2. SCROLL PROGRESS BAR & INTERSECTION OBSERVER
+               ========================================== */
+            const progressBar = document.getElementById('progress-bar');
+            
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const currentScroll = window.pageYOffset;
+                const progress = (currentScroll / totalHeight) * 100;
+                progressBar.style.width = `${progress}%`;
+            });
+
+            const scrollFadeElements = document.querySelectorAll('.scroll-fade');
+            const observerOptions = {
+                root: null,
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            };
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            scrollFadeElements.forEach(el => scrollObserver.observe(el));
+
+
+            /* ==========================================
+               3. PAGE 1 — CINEMATIC INTRO SEQUENCE (Slower)
+               ========================================== */
+            const introSequenceContainer = document.getElementById('intro-sequence');
+            const introCtaWrapper = document.getElementById('intro-cta-wrapper');
+            
+            const introLinesData = [
+                "hey my shona babde shone gubbu bayko...",
+                "i know it's not always easy to put our feelings into words...",
+                "and sometimes things get heavy between us...",
+                "but whenever we feel lost or distant...",
+                "i just want us to remember how much we truly care for one another.",
+                "instead of letting misunderstandings build walls...",
+                "i wanted to create something soft and honest for us...",
+                "just our hearts...",
+                "open, vulnerable, and full of love."
+            ];
+
+            function runIntroSequence() {
+                introSequenceContainer.innerHTML = '';
+                let currentIndex = 0;
+
+                function showNextLine() {
+                    if (currentIndex < introLinesData.length) {
+                        const p = document.createElement('p');
+                        p.className = 'intro-line';
+                        p.textContent = introLinesData[currentIndex];
+                        introSequenceContainer.appendChild(p);
+
+                        setTimeout(() => {
+                            p.classList.add('show');
+                        }, 80);
+
+                        const displayDuration = currentIndex === introLinesData.length - 1 ? 4000 : 3200;
+
+                        setTimeout(() => {
+                            p.classList.remove('show');
+                            p.classList.add('hide');
+                            setTimeout(() => {
+                                p.remove();
+                                currentIndex++;
+                                showNextLine();
+                            }, 1200);
+                        }, displayDuration);
+                    } else {
+                        introCtaWrapper.classList.add('show');
+                    }
+                }
+                showNextLine();
+            }
+            runIntroSequence();
+
+            document.getElementById('start-journey-btn').addEventListener('click', () => {
+                document.getElementById('page-timeline').scrollIntoView({ behavior: 'smooth' });
+            });
+
+
+            /* ==========================================
+               4. PAGE 9 — CINEMATIC RESTART ANIMATION (Slower)
+               ========================================== */
+            const restartSection = document.getElementById('page-restart');
+            const cinematicLines = restartSection.querySelectorAll('.cinematic-line');
+            const cinematicGiant = restartSection.querySelector('.cinematic-giant');
+            const restartListWrapper = restartSection.querySelector('.restart-list-wrapper');
+            
+            let restartTriggered = false;
+
+            const restartObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !restartTriggered) {
+                        restartTriggered = true;
+                        runRestartCinematic();
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            restartObserver.observe(restartSection);
+
+            function runRestartCinematic() {
+                const timings = [0, 3000, 6000, 9500, 12500];
+                
+                cinematicLines.forEach((line, index) => {
+                    const delay = parseInt(line.getAttribute('data-delay') || timings[index] || 0);
+                    setTimeout(() => {
+                        line.classList.add('active');
+                        if (index > 0 && cinematicLines[index - 1]) {
+                            cinematicLines[index - 1].classList.remove('active');
+                            cinematicLines[index - 1].classList.add('fade-out');
+                        }
+                    }, delay);
+                });
+
+                setTimeout(() => {
+                    if (cinematicLines[cinematicLines.length - 1]) {
+                        cinematicLines[cinematicLines.length - 1].classList.remove('active');
+                        cinematicLines[cinematicLines.length - 1].classList.add('fade-out');
+                    }
+                    cinematicGiant.classList.add('active');
+                }, 15500);
+
+                setTimeout(() => {
+                    cinematicGiant.classList.remove('active');
+                    cinematicGiant.classList.add('fade-out');
+                    restartListWrapper.classList.add('active');
+                }, 19000);
+            }
+
+
+            /* ==========================================
+               5. PAGE 10 — DECISION BUTTONS INTERACTIONS
+               ========================================== */
+            const btnYes = document.getElementById('btn-yes');
+            const btnNo = document.getElementById('btn-no');
+            const responseYes = document.getElementById('response-yes');
+            const responseNotSure = document.getElementById('response-not-sure');
+            const decisionButtonsGroup = document.getElementById('decision-buttons-group');
+            const heartPulseContainer = document.getElementById('heart-pulse-container');
+
+            btnYes.addEventListener('click', () => {
+                decisionButtonsGroup.style.opacity = '0';
+                setTimeout(() => {
+                    responseYes.classList.add('show');
+                    if (!heartPulseContainer.hasChildNodes()) {
+                        const heartDiv = document.createElement('div');
+                        heartDiv.className = 'pulse-heart';
+                        heartDiv.innerHTML = '❤️';
+                        heartPulseContainer.appendChild(heartDiv);
+                    }
+                }, 400);
+            });
+
+            btnNo.addEventListener('click', () => {
+                decisionButtonsGroup.style.opacity = '0';
+                setTimeout(() => {
+                    responseNotSure.classList.add('show');
+                }, 400);
+            });
+
+
+            /* ==========================================
+               6. PRIVATE "OUR PROMISES" MODAL & FOOTER ACTIONS
+               ========================================== */
+            const rulesTriggerBtn = document.getElementById('rules-trigger-btn');
+            const rulesModal = document.getElementById('rules-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            rulesTriggerBtn.addEventListener('click', () => {
+                rulesModal.classList.add('show');
+            });
+
+            modalCloseBtn.addEventListener('click', () => {
+                rulesModal.classList.remove('show');
+            });
+
+            rulesModal.addEventListener('click', (e) => {
+                if (e.target === rulesModal) {
+                    rulesModal.classList.remove('show');
+                }
+            });
+
+            document.getElementById('restart-journey-top-btn').addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+        });
+    </script>
+</body>
+</html>
